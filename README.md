@@ -21,7 +21,7 @@ import Overlay from 'react-image-overlay'
 class Overlay extends Component {
   render () {
     return (
-      <Overly />
+      <Overlay />
     )
   }
 }

@@ -1,39 +1,140 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Overlay extends Component {
+const style = {
+  container: {
+    position: 'relative',
+  },
+  mainImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+  overlayImage: {
+    position: 'absolute',
+    objectFit: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+};
+
+class Overlay extends Component {
   static propTypes = {
-    url: PropTypes.string,
+    url: PropTypes.string.isRequired,
+    imageHeight: PropTypes.number,
+    imageWidth: PropTypes.number,
+    overlayHeight: PropTypes.number,
+    overlayWidth: PropTypes.number,
+    position: PropTypes.string,
   }
 
   static defaultProps = {
-    url: 'https://via.placeholder.com/250x250',
+    imageHeight: 250,
+    imageWidth: 250,
+    overlayHeight: 30,
+    overlayWidth: 30,
+    position: null,
   }
 
   constructor() {
     super();
-    this.canvasRef = React.createRef();
-  }
-
-  componentDidMount() {
-    const {
-      url,
-    } = this.props;
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.src = url;
-
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
+    this.state = {
+      error: false,
     };
   }
 
+  componentDidMount() {
+    const { url } = this.props;
+    if (typeof url === 'string' || url instanceof String) {
+      this.setState({
+        error: false,
+      });
+    } else {
+      this.setState({
+        error: true,
+      });
+    }
+  }
+
+  componentWillReceiveProps() {
+
+  }
+
+  overlayPosition() {
+    const { position } = this.props;
+    switch (position) {
+      case 'topLeft':
+        return {
+          top: '10px',
+          left: '10px',
+        };
+      case 'topRight':
+        return {
+          top: '10px',
+          right: '10px',
+        };
+      case 'bottomLeft':
+        return {
+          bottom: '10px',
+          left: '10px',
+        };
+      default:
+        return {
+          bottom: '10px',
+          right: '10px',
+        };
+    }
+  }
+
   render() {
+    const {
+      container,
+      mainImage,
+      overlayImage,
+    } = style;
+    const { error } = this.state;
+    const {
+      url,
+      imageHeight,
+      imageWidth,
+      overlayHeight,
+      overlayWidth,
+      position,
+    } = this.props;
+
+    if (error) {
+      return <p>Image URL required</p>;
+    }
+
     return (
-      <Fragment>
-        <canvas id="canvas" height={250} width={250} />
-      </Fragment>
+      <div
+        style={{
+          ...container,
+          height: imageHeight,
+          width: imageWidth,
+        }}
+      >
+        <img
+          src={url}
+          alt="main"
+          style={{
+            ...mainImage,
+            backgroundImage: `url("${url}")`,
+          }}
+        />
+        <img
+          src={url}
+          alt="overlay"
+          style={{
+            ...overlayImage,
+            height: overlayHeight,
+            width: overlayWidth,
+            ...this.overlayPosition(position),
+          }}
+        />
+      </div>
     );
   }
 }
+
+export default Overlay;
