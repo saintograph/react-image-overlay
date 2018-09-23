@@ -6,7 +6,8 @@ export default class App extends Component {
     return (
       <Fragment>
         <Overlay
-          url='https://placeimg.com/850/750/any'
+          url='https://placeimg.com/250/250/any'
+          overlayUrl='https://placeimg.com/50/50/any'
           imageHeight={100}
           position={'bottomRight'}
           overlayWidth={50}

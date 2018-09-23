@@ -21,6 +21,7 @@ const style = {
 class Overlay extends Component {
   static propTypes = {
     url: PropTypes.string.isRequired,
+    overlayUrl: PropTypes.string.isRequired,
     imageHeight: PropTypes.number,
     imageWidth: PropTypes.number,
     overlayHeight: PropTypes.number,
@@ -44,8 +45,9 @@ class Overlay extends Component {
   }
 
   componentDidMount() {
-    const { url } = this.props;
-    if (typeof url === 'string' || url instanceof String) {
+    const { url, overlayUrl } = this.props;
+    if ((typeof url === 'string' || url instanceof String)
+    && (typeof overlayUrl === 'string' || overlayUrl instanceof String)) {
       this.setState({
         error: false,
       });
@@ -100,10 +102,11 @@ class Overlay extends Component {
       overlayHeight,
       overlayWidth,
       position,
+      overlayUrl,
     } = this.props;
 
     if (error) {
-      return <p>Image URL required</p>;
+      return <p>URL for main image and overlay required</p>;
     }
 
     return (
@@ -123,7 +126,7 @@ class Overlay extends Component {
           }}
         />
         <img
-          src={url}
+          src={overlayUrl}
           alt="overlay"
           style={{
             ...overlayImage,

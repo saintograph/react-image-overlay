@@ -7,25 +7,51 @@
 
 ## Install
 
+With `npm`:
+
 ```bash
 npm install --save react-image-overlay
+```
+
+With `yarn`:
+
+```bash
+yarn add react-image-overlay
 ```
 
 ## Usage
 
 ```jsx
 import React, { Component } from 'react'
-
 import Overlay from 'react-image-overlay'
 
 class Overlay extends Component {
   render () {
     return (
-      <Overlay />
+      <Overlay 
+          url='https://placeimg.com/250/250/any' // required
+          overlayUrl='https://placeimg.com/50/50/any' // required
+          imageHeight={100}
+          position={'bottomRight'}
+          overlayWidth={50}
+          overlayHeight={50}
+      />
     )
   }
 }
 ```
+
+Prop-types
+
+| prop  |  type |   |
+|---|---|---|
+| url  | string  | required  |
+|  overlayUrl |  string | required  |
+| imageHeight  | number  |  optional |
+| imageWidth  | number  |  optional |
+| overlayHeight  | number  |  optional |
+| overlayWidth  | number  |  optional |
+| position  | number  |  possible values: 'bottomLeft', 'bottomRight', 'topLeft', 'topRight' |
 
 ## License
 
