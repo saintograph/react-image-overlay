@@ -38,6 +38,7 @@ class Overlay extends Component {
           position={'bottomRight'}
           overlayWidth={50}
           overlayHeight={50}
+          watermark={false}
       />
     )
   }
@@ -55,6 +56,9 @@ class Overlay extends Component {
 | overlayHeight  | number  |  optional |
 | overlayWidth  | number  |  optional |
 | position  | number  |  possible values: 'bottomLeft', 'bottomRight', 'topLeft', 'topRight' |
+| watermark  | true/false  |  use this option if you want the overlay to be applied as a watermark |
+
+**Important Note:** Enabling watermark renders the image and overlay to a single canvas, preventing site users from downloading images separately.
 
 ## License
 
