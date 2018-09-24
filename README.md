@@ -1,5 +1,4 @@
 # react-image-overlay
-### WIP
 
 > Overlay images.
 
@@ -55,7 +54,7 @@ class Overlay extends Component {
 | imageWidth  | number  |  optional |
 | overlayHeight  | number  |  optional |
 | overlayWidth  | number  |  optional |
-| position  | number  |  possible values: 'bottomLeft', 'bottomRight', 'topLeft', 'topRight' |
+| position  | number  |  possible values: 'bottomLeft', 'center', 'bottomRight', 'topLeft', 'topRight' |
 | watermark  | true/false  |  use this option if you want the overlay to be applied as a watermark |
 
 **Important Note:** Enabling watermark renders the image and overlay to a single canvas, preventing site users from downloading images separately.
