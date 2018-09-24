@@ -19,6 +19,9 @@ With `yarn`:
 yarn add react-image-overlay
 ```
 
+### To do
+* styling props for image and overlay
+
 ## Usage
 
 ```jsx
@@ -35,13 +38,14 @@ class Overlay extends Component {
           position={'bottomRight'}
           overlayWidth={50}
           overlayHeight={50}
+          watermark={false}
       />
     )
   }
 }
 ```
 
-Prop-types
+### Prop-types
 
 | prop  |  type |   |
 |---|---|---|
@@ -52,6 +56,9 @@ Prop-types
 | overlayHeight  | number  |  optional |
 | overlayWidth  | number  |  optional |
 | position  | number  |  possible values: 'bottomLeft', 'bottomRight', 'topLeft', 'topRight' |
+| watermark  | true/false  |  use this option if you want the overlay to be applied as a watermark |
+
+**Important Note:** Enabling watermark renders the image and overlay to a single canvas, preventing site users from downloading images separately.
 
 ## License
 

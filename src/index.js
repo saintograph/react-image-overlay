@@ -27,6 +27,7 @@ class Overlay extends Component {
     overlayHeight: PropTypes.number,
     overlayWidth: PropTypes.number,
     position: PropTypes.string,
+    watermark: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -35,31 +36,63 @@ class Overlay extends Component {
     overlayHeight: 30,
     overlayWidth: 30,
     position: null,
+    watermark: true,
   }
 
   constructor() {
     super();
-    this.state = {
-      error: false,
-    };
+    this.canvasRef = React.createRef();
   }
 
   componentDidMount() {
-    const { url, overlayUrl } = this.props;
-    if ((typeof url === 'string' || url instanceof String)
-    && (typeof overlayUrl === 'string' || overlayUrl instanceof String)) {
-      this.setState({
-        error: false,
-      });
-    } else {
-      this.setState({
-        error: true,
-      });
+    const {
+      url,
+      overlayUrl,
+      watermark,
+    } = this.props;
+    if (watermark) {
+      const context = this.canvasRef;
+
+      const img = new Image();
+      const overlay = new Image();
+      img.src = url;
+      overlay.src = overlayUrl;
+
+      img.onload = () => {
+        context.drawImage(img, 0, 0);
+        context.drawImage(...this.overlayCanvas(overlay));
+      };
     }
   }
 
-  componentWillReceiveProps() {
-
+  overlayCanvas(overlay) {
+    const {
+      position,
+      overlayHeight,
+      imageHeight,
+      imageWidth,
+      overlayWidth,
+    } = this.props;
+    switch (position) {
+      case 'topLeft':
+        return [overlay, 10, 10];
+      case 'topRight':
+        return [overlay, (imageWidth - overlayWidth) - 10, 10];
+      case 'bottomLeft':
+        return [overlay, 10, (imageHeight - overlayHeight) - 10];
+      case 'center':
+        return [
+          overlay,
+          Math.floor(imageWidth / 2 - overlayWidth / 2),
+          Math.floor(imageHeight / 2 - overlayHeight / 2),
+        ];
+      default:
+        return [
+          overlay,
+          (imageHeight - overlayHeight) - 10,
+          (imageWidth - overlayWidth) - 10,
+        ];
+    }
   }
 
   overlayPosition() {
@@ -80,6 +113,14 @@ class Overlay extends Component {
           bottom: '10px',
           left: '10px',
         };
+      case 'center':
+        return {
+          right: 0,
+          left: 0,
+          top: 0,
+          bottom: 0,
+          margin: 'auto auto',
+        };
       default:
         return {
           bottom: '10px',
@@ -94,7 +135,6 @@ class Overlay extends Component {
       mainImage,
       overlayImage,
     } = style;
-    const { error } = this.state;
     const {
       url,
       imageHeight,
@@ -103,10 +143,17 @@ class Overlay extends Component {
       overlayWidth,
       position,
       overlayUrl,
+      watermark,
     } = this.props;
 
-    if (error) {
-      return <p>URL for main image and overlay required</p>;
+    if (watermark) {
+      return (
+        <canvas
+          ref={c => this.canvasRef = c.getContext('2d')}
+          height={imageHeight}
+          width={imageWidth}
+        />
+      );
     }
 
     return (
