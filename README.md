@@ -19,6 +19,9 @@ With `yarn`:
 yarn add react-image-overlay
 ```
 
+### To do
+* styling props for image and overlay
+
 ## Usage
 
 ```jsx
@@ -41,7 +44,7 @@ class Overlay extends Component {
 }
 ```
 
-Prop-types
+### Prop-types
 
 | prop  |  type |   |
 |---|---|---|

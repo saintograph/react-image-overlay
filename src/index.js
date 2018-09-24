@@ -27,6 +27,7 @@ class Overlay extends Component {
     overlayHeight: PropTypes.number,
     overlayWidth: PropTypes.number,
     position: PropTypes.string,
+    canBeCopied: PropTypes.string,
   }
 
   static defaultProps = {
@@ -35,31 +36,7 @@ class Overlay extends Component {
     overlayHeight: 30,
     overlayWidth: 30,
     position: null,
-  }
-
-  constructor() {
-    super();
-    this.state = {
-      error: false,
-    };
-  }
-
-  componentDidMount() {
-    const { url, overlayUrl } = this.props;
-    if ((typeof url === 'string' || url instanceof String)
-    && (typeof overlayUrl === 'string' || overlayUrl instanceof String)) {
-      this.setState({
-        error: false,
-      });
-    } else {
-      this.setState({
-        error: true,
-      });
-    }
-  }
-
-  componentWillReceiveProps() {
-
+    canBeCopied: true,
   }
 
   overlayPosition() {
@@ -80,6 +57,14 @@ class Overlay extends Component {
           bottom: '10px',
           left: '10px',
         };
+      case 'center':
+        return {
+          right: 0,
+          left: 0,
+          top: 0,
+          bottom: 0,
+          margin: 'auto auto',
+        };
       default:
         return {
           bottom: '10px',
@@ -94,7 +79,6 @@ class Overlay extends Component {
       mainImage,
       overlayImage,
     } = style;
-    const { error } = this.state;
     const {
       url,
       imageHeight,
@@ -103,11 +87,8 @@ class Overlay extends Component {
       overlayWidth,
       position,
       overlayUrl,
+      canBeCopied,
     } = this.props;
-
-    if (error) {
-      return <p>URL for main image and overlay required</p>;
-    }
 
     return (
       <div
