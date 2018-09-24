@@ -13,6 +13,8 @@ export default class App extends Component {
           position={'center'}
           overlayWidth={150}
           overlayHeight={150}
+          watermark={true}
+          overlayPadding={10}
         />
       </Fragment>
     )

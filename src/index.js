@@ -28,6 +28,7 @@ class Overlay extends Component {
     overlayWidth: PropTypes.number,
     position: PropTypes.string,
     watermark: PropTypes.bool,
+    overlayPadding: PropTypes.number,
   }
 
   static defaultProps = {
@@ -37,6 +38,7 @@ class Overlay extends Component {
     overlayWidth: 30,
     position: null,
     watermark: true,
+    overlayPadding: 10,
   }
 
   constructor() {
@@ -72,14 +74,15 @@ class Overlay extends Component {
       imageHeight,
       imageWidth,
       overlayWidth,
+      overlayPadding,
     } = this.props;
     switch (position) {
       case 'topLeft':
-        return [overlay, 10, 10];
+        return [overlay, overlayPadding, overlayPadding];
       case 'topRight':
-        return [overlay, (imageWidth - overlayWidth) - 10, 10];
+        return [overlay, (imageWidth - overlayWidth) - overlayPadding, overlayPadding];
       case 'bottomLeft':
-        return [overlay, 10, (imageHeight - overlayHeight) - 10];
+        return [overlay, overlayPadding, (imageHeight - overlayHeight) - overlayPadding];
       case 'center':
         return [
           overlay,
@@ -89,29 +92,29 @@ class Overlay extends Component {
       default:
         return [
           overlay,
-          (imageHeight - overlayHeight) - 10,
-          (imageWidth - overlayWidth) - 10,
+          (imageHeight - overlayHeight) - overlayPadding,
+          (imageWidth - overlayWidth) - overlayPadding,
         ];
     }
   }
 
   overlayPosition() {
-    const { position } = this.props;
+    const { position, overlayPadding } = this.props;
     switch (position) {
       case 'topLeft':
         return {
-          top: '10px',
-          left: '10px',
+          top: overlayPadding,
+          left: overlayPadding,
         };
       case 'topRight':
         return {
-          top: '10px',
-          right: '10px',
+          top: overlayPadding,
+          right: overlayPadding,
         };
       case 'bottomLeft':
         return {
-          bottom: '10px',
-          left: '10px',
+          bottom: overlayPadding,
+          left: overlayPadding,
         };
       case 'center':
         return {
@@ -123,8 +126,8 @@ class Overlay extends Component {
         };
       default:
         return {
-          bottom: '10px',
-          right: '10px',
+          bottom: overlayPadding,
+          right: overlayPadding,
         };
     }
   }
