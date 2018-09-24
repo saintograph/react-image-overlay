@@ -27,7 +27,7 @@ yarn add react-image-overlay
 import React, { Component } from 'react'
 import Overlay from 'react-image-overlay'
 
-class Overlay extends Component {
+class Foo extends Component {
   render () {
     return (
       <Overlay 
@@ -40,9 +40,9 @@ class Overlay extends Component {
           overlayPadding={10}
           watermark={false}
       />
-    )
+    );
   }
-}
+};
 ```
 
 ### Prop-types
