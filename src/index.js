@@ -58,11 +58,14 @@ class Overlay extends Component {
       const img = new Image();
       const overlay = new Image();
       img.src = url;
-      overlay.src = overlayUrl;
+      
 
       img.onload = () => {
-        context.drawImage(img, 0, 0);
-        context.drawImage(...this.overlayCanvas(overlay));
+        overlay.src = overlayUrl;
+        overlay.onload = () => {
+          context.drawImage(img, 0, 0);
+          context.drawImage(...this.overlayCanvas(overlay));
+        };
       };
     }
   }
